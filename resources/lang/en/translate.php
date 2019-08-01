@@ -20,4 +20,8 @@ return [
     'task' => 'Tasks',
     'action' => 'Action',
     'noTask' => 'There is no task! All tasks are completed!',
+    'tickets'=> 'TICKETS',
+    'images'=> 'IMAGES',
+    'create_ticket'=> 'Create ticket',
+
 ];

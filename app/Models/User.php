@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    /**
+     * Get all of the tickets for the user.
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'auth_by')->latest();
+    }
 }

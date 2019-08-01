@@ -25,8 +25,6 @@ class TaskRepository extends EloquentRepository
      */
     public function forUser(User $user)
     {
-        return $user->tasks()
-            ->orderBy('created_at', 'asc')
-            ->get();
+        return $user->tasks()->orderBy('name', 'asc')->paginate(3);
     }
 }

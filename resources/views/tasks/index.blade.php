@@ -62,6 +62,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                        {{ $tasks->links() }}
                     </tbody>
                 </table>
             </div>
