@@ -17,6 +17,11 @@
     Route::resource('tasks', 'TaskController');
     Route::get('logout', 'Auth\LoginController@logout');
 
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/users', 'FollowController@index');
+        Route::post('/follow/{user}', 'FollowController@follow');
+        Route::delete('/unfollow/{user}', 'FollowController@unfollow');
+    });
 
     Route::get('/contact', 'TicketsController@create')->name('create_ticket');
     Route::post('/contact', 'TicketsController@store');
