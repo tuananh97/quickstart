@@ -37,6 +37,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isFollowing($target_id)
+    {
+        return (bool)$this->follows()->where('target_id', $target_id)->first(['id']);
+    }
     /**
      * Get all of the tasks for the user.
      */
@@ -51,5 +55,9 @@ class User extends Authenticatable
     public function images()
     {
         return $this->hasMany(Image::class, 'auth_by')->latest();
+    }
+
+    public function follows() {
+        return $this->hasMany(Follow::class);
     }
 }
