@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Manage Tickets')
+
 @section('content')
     <div class="container col-md-8 col-md-offset-2 mt-5">
         <a class="nav-link btn btn-info" href="{{ route('create_ticket') }}">{{ trans('translate.create_ticket') }}</a>

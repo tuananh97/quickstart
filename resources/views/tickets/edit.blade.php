@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Ticket')
+
 @section('content')
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">

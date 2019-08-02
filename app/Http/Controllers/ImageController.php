@@ -12,10 +12,12 @@ class ImageController extends Controller
     {
         $this->image = $image;
     }
+
     public function getImages()
     {
         return view('images.images')->with('images', auth()->user()->images);
     }
+
     public function postUpload(StoreImage $request)
     {
         $path = Storage::disk('s3')->put('images/originals', $request->file, 'public');

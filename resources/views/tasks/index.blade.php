@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Manage Tasks')
+
 @section('content')
 
     <!-- Bootstrap Boilerplate... -->

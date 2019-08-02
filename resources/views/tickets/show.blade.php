@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Ticket')
+
 @section('content')
 
     <div class="container col-md-8 col-md-offset-2 mt-5">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Manage Images')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -19,7 +21,7 @@
                                     <th><img width="100px" src="{{$image->url}}"></th>
                                     <td>{{$image->title}}</td>
                                     <td>{{$image->size_in_kb}} KB</td>
-                                    <td>{{$image->uploaded_time}}</td>
+                                    <td>{{date_format($image->created_at,"H:i:s d/m/Y")}}</td>
                                 </tr>
                             @endforeach
                         </table>
