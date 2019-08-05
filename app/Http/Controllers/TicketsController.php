@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 use App\Models\Ticket;
+use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\TicketFormRequest;
 use Illuminate\Support\Facades\Mail;
+use App\Repositories\TicketRepository;
 
 class TicketsController extends Controller
 {
+    public function __construct(TicketRepository $ticketRepository)
+    {
+        $this->ticketRepository = $ticketRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = $this->ticketRepository->getAll();
         return view('tickets.index', compact('tickets'));
     }
 
@@ -66,7 +72,7 @@ class TicketsController extends Controller
      */
     public function show($slug)
     {
-        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+        $ticket = $this->ticketRepository->find($slug);
         $comments = $ticket->comments()->get();
         return view('tickets.show', compact('ticket', 'comments'));
     }
@@ -79,7 +85,7 @@ class TicketsController extends Controller
      */
     public function edit($slug)
     {
-        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+        $ticket = $this->ticketRepository->find($slug);
         return view('tickets.edit', compact('ticket'));
     }
 
@@ -92,7 +98,7 @@ class TicketsController extends Controller
      */
     public function update($slug, TicketFormRequest $request)
     {
-        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+        $ticket = $this->ticketRepository->find($slug);
         $ticket->title = $request->get('title');
         $ticket->content = $request->get('content');
         if($request->get('status') != null) {
@@ -112,7 +118,7 @@ class TicketsController extends Controller
      */
     public function destroy($slug)
     {
-        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+        $ticket = $this->ticketRepository->find($slug);
         $ticket->delete();
         return redirect('/tickets')->with('status', 'The ticket '.$slug.' has been deleted!');
     }
