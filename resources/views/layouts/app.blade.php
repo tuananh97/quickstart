@@ -42,6 +42,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ trans('translate.login') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="redirect/google">Google Login</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="redirect/facebook">FB Login</a>
+                            </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ trans('translate.register') }}</a>
