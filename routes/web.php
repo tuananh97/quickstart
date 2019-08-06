@@ -16,6 +16,8 @@
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('tasks', 'TaskController');
     Route::get('logout', 'Auth\LoginController@logout');
+    Route::get('/redirect/{social}', 'SocialAuthController@redirect');
+    Route::get('/callback/{social}', 'SocialAuthController@callback');
 
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/users', 'FollowController@index');
