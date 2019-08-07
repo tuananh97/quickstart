@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8">
 </head>
-<body>
-<h2>Learning Laravel!</h2>
+    <body>
+        <h2>Learning Laravel!</h2>
 
-<div>
-    You have a new ticket. The ticket id is {{ $ticket }}!
-</div>
+        <div>
+            You have a new ticket. The ticket id is {{ $ticketID }}!
+            <br>
+            The ticket name is {{ $ticketName }}
+        </div>
 
-</body>
+    </body>
 </html>
