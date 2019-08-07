@@ -10,9 +10,17 @@
 |
 */
     Route::get('/', function () {
-        return view('welcome');
-    });
+       return view('welcome');
+    })->middleware('auth');
+
     Auth::routes();
+
+    Route::resource('users', 'UserController');
+
+    Route::get('/getCurrentUser', function() {
+       return Auth::user()->load('roles');
+    });
+
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('tasks', 'TaskController');
     Route::get('logout', 'Auth\LoginController@logout');
@@ -20,7 +28,7 @@
     Route::get('/callback/{social}', 'SocialAuthController@callback');
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/users', 'FollowController@index');
+        Route::get('/users/follows', 'FollowController@index');
         Route::post('/follow/{user}', 'FollowController@follow');
         Route::delete('/unfollow/{user}', 'FollowController@unfollow');
     });

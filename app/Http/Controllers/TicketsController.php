@@ -5,6 +5,7 @@ use App\Models\Ticket;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\TicketFormRequest;
+use App\Mail\Tiket_Create;
 use Illuminate\Support\Facades\Mail;
 use App\Repositories\TicketRepository;
 
@@ -56,11 +57,7 @@ class TicketsController extends Controller
             'ticket' => $slug,
         );
 
-        Mail::send('emails.ticket', $data, function ($message) {
-            $message->from('anhcu.97.uet@gmail.com', 'Learning Laravel');
-            $message->to('trananh9a@gmail.com')->subject('There is a new ticket!');
-        });
-
+        Mail::to($request->user())->send(new Tiket_Create($ticket));
         return redirect('/tickets')->with('status', 'Your ticket has been created! Its unique id is: '.$slug);
     }
 

@@ -9,7 +9,7 @@ class FollowController extends Controller
 {
     public function index()
     {
-        return view('users.index', [
+        return view('users.index2', [
             'users' => User::where('id', '!=', Auth::id())->get()
         ]);
     }
