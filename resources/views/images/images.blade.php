@@ -22,6 +22,15 @@
                                     <td>{{$image->title}}</td>
                                     <td>{{$image->size_in_kb}} KB</td>
                                     <td>{{date_format($image->created_at,"H:i:s d/m/Y")}}</td>
+                                    <td>
+                                        <form action="{{ route('deleteImage', $image->id) }}" method="POST">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </form></td>
                                 </tr>
                             @endforeach
                         </table>

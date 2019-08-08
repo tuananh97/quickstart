@@ -3,7 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -55,6 +60,22 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Notifications <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left">
+                                    @if(auth()->user()->unreadNotifications->count() != 0)
+                                    <li><a href="{{ route('maskRead') }}">Mask as read</a></li>
+                                    @foreach (auth()->user()->unreadNotifications as $notifi)
+                                      <li style="background-color: lightgrey" class="dropdown-header">{{ $notifi->data['follower_name'] }} follow me</li>
+                                    @endforeach
+                                    @endif
+                                    @foreach (auth()->user()->readNotifications as $notifi)
+                                      <li class="dropdown-header">{{ $notifi->data['follower_name'] }} follow me</li>
+                                    @endforeach
+                                </ul>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('tickets') }}">{{ trans('translate.tickets') }}</a>
                             </li>

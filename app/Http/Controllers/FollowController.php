@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Follow;
 use Illuminate\Http\Request;
+use App\Notifications\UserFollowed;
 use Auth;
+
 class FollowController extends Controller
 {
     public function index()
     {
-        return view('users.index2', [
+        return view('index2', [
             'users' => User::where('id', '!=', Auth::id())->get()
         ]);
     }
@@ -21,6 +23,8 @@ class FollowController extends Controller
             Auth::user()->follows()->create([
                 'target_id' => $user->id,
             ]);
+            // add this to send a notification
+            $user->notify(new UserFollowed(Auth::user()));
 
             return back()->with('success', 'You are now friends with '. $user->name);
         } else {

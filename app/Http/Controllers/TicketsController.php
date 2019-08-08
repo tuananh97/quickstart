@@ -8,9 +8,14 @@ use App\Http\Requests\TicketFormRequest;
 use App\Mail\Tiket_Create;
 use Illuminate\Support\Facades\Mail;
 use App\Repositories\TicketRepository;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\ticketCreated;
+use Illuminate\Support\Facades\Notification;
 
 class TicketsController extends Controller
 {
+    use Notifiable;
+
     public function __construct(TicketRepository $ticketRepository)
     {
         $this->ticketRepository = $ticketRepository;
@@ -57,7 +62,13 @@ class TicketsController extends Controller
             'ticket' => $slug,
         );
 
+        $toUser = $request->user();
+
+        // send notification using the "user" model, when the user receives new message
+        $toUser->notify(new ticketCreated($ticket));
+
         Mail::to($request->user())->send(new Tiket_Create($ticket));
+
         return redirect('/tickets')->with('status', 'Your ticket has been created! Its unique id is: '.$slug);
     }
 

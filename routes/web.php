@@ -28,10 +28,16 @@
     Route::get('/callback/{social}', 'SocialAuthController@callback');
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/users/follows', 'FollowController@index');
+        Route::get('/follows', 'FollowController@index');
         Route::post('/follow/{user}', 'FollowController@follow');
         Route::delete('/unfollow/{user}', 'FollowController@unfollow');
+        Route::get('/notifications', 'UsersController@notifications');
     });
+
+    Route::get('maskAsRead', function(){
+      auth()->user()->unreadNotifications->markAsRead();
+      redirect()->back();
+    })->name('maskRead');
 
     Route::get('/contact', 'TicketsController@create')->name('create_ticket');
     Route::post('/contact', 'TicketsController@store');
@@ -45,6 +51,7 @@
 
     Route::get('/images', 'ImageController@getImages')->name('images');
     Route::post('/upload', 'ImageController@postUpload')->name('uploadfile');
+    Route::delete('/images/{image}', 'ImageController@destroy')->name('deleteImage');
 
     Route::get('sendemail', function () {
 
