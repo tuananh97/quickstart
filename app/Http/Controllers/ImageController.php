@@ -28,4 +28,12 @@ class ImageController extends Controller
         $this->image->create($request->only('path', 'title', 'size'));
         return back()->with('success', 'Image Successfully Saved');
     }
+
+    public function destroy(Image $image)
+    {
+        $path = $image->path;
+        $image->delete();
+        Storage::disk('s3')->delete($image->path);
+        return back()->with('success', 'Image Successfully Saved');
+    }
 }
